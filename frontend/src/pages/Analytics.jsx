@@ -16,6 +16,7 @@ import {
   Filler
 } from 'chart.js';
 import axios from 'axios';
+import API_BASE from '../api';
 import { ArrowLeft, TrendingUp, Award, Target, AlertCircle } from 'lucide-react';
 
 ChartJS.register(
@@ -37,7 +38,7 @@ const Analytics = () => {
   const fetchAnalytics = async (token) => {
     try {
       const config = { headers: { Authorization: `Bearer ${token}` } };
-      const { data } = await axios.get('http://localhost:5000/api/interview/analytics', config);
+      const { data } = await axios.get(`${API_BASE}/api/interview/analytics`, config);
       setAnalytics(data);
     } catch (err) {
       console.error('Failed to fetch analytics', err);

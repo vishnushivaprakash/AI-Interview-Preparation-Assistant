@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Mic, MicOff, Play, CheckCircle } from 'lucide-react';
 import axios from 'axios';
+import API_BASE from '../api';
 
 const Interview = () => {
   const [questions, setQuestions] = useState([]);
@@ -21,7 +22,7 @@ const Interview = () => {
       try {
         const userInfo = JSON.parse(localStorage.getItem('userInfo'));
         const config = { headers: { Authorization: `Bearer ${userInfo?.token}` } };
-        const { data } = await axios.post('http://localhost:5000/api/interview/generate', {
+        const { data } = await axios.post(`${API_BASE}/api/interview/generate`, {
           role: 'Frontend Developer',
           difficulty: 'Intermediate',
           type: 'Technical'
@@ -88,7 +89,7 @@ const Interview = () => {
       const userInfo = JSON.parse(localStorage.getItem('userInfo'));
       const config = { headers: { Authorization: `Bearer ${userInfo?.token}` } };
       
-      const { data } = await axios.post('http://localhost:5000/api/interview/evaluate', {
+      const { data } = await axios.post(`${API_BASE}/api/interview/evaluate`, {
         question: questions[currentQuestionIndex],
         answer: transcript
       }, config);

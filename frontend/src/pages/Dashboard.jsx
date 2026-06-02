@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import axios from 'axios';
+import API_BASE from '../api';
 import { Line, Radar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -49,7 +50,7 @@ const Dashboard = () => {
   const fetchAnalytics = async (token) => {
     try {
       const config = { headers: { Authorization: `Bearer ${token}` } };
-      const { data } = await axios.get('http://localhost:5000/api/interview/analytics', config);
+      const { data } = await axios.get(`${API_BASE}/api/interview/analytics`, config);
       if (data.scores.length > 0) {
         setAnalytics(data);
       }
@@ -78,7 +79,7 @@ const Dashboard = () => {
           'Content-Type': 'multipart/form-data'
         } 
       };
-      await axios.post('http://localhost:5000/api/resume/upload', formData, config);
+      await axios.post(`${API_BASE}/api/resume/upload`, formData, config);
       setUploadStatus('Resume processed successfully!');
       setTimeout(() => setUploadStatus(''), 3000);
     } catch (error) {
